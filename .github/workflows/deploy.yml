@@ -21,23 +21,29 @@ jobs:
             - name: Build the Docker image
               run: |
                   docker build \
-                    -t yuankai619/keelungsightviewer:latest .
+                    -t yuankai619/OrderNow-Image-Uploader:latest .
 
             - name: Push the Docker image to Docker Hub
-              run: docker push yuankai619/keelungsightviewer:latest
+              run: docker push yuankai619/OrderNow-Image-Uploader:latest
 
             - name: Deploy to Heroku
               uses: akhileshns/heroku-deploy@v3.13.15
               with:
                   heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-                  heroku_app_name: "keelung-sight-viewer"
+                  heroku_app_name: "order-now-image-uploader"
                   heroku_email: "01157116@email.ntou.edu.tw"
-                  docker_image: "yuankai619/keelungsightviewer:latest"
+                  docker_image: "yuankai619/OrderNow-Image-Uploader:latest"
                   usedocker: true
                   docker_heroku_process_type: web
                   docker_build_args: |
-                      DB_PASSWORD
-                      DB_NAME
+                      IMGUR_CLIENT_ID
+                      IMGUR_CLIENT_SECRET
+                      IMGUR_ACCESS_TOKEN
+                      PORT
+                      ALLOWED_ORIGIN
               env:
-                  DB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-                  DB_NAME: ${{ secrets.DOCKER_USERNAME }}
+                  IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
+                  IMGUR_CLIENT_SECRET: ${{ secrets.IMGUR_CLIENT_SECRET }}
+                  IMGUR_ACCESS_TOKEN: ${{ secrets.IMGUR_ACCESS_TOKEN }}
+                  PORT: ${{ secrets.PORT }}
+                  ALLOWED_ORIGIN: ${{ secrets.ALLOWED_ORIGIN }}
