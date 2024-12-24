@@ -3,7 +3,7 @@ FROM node:latest
 WORKDIR /app
 
 COPY . .
-RUN npm install && npm run start
+RUN npm install 
 
 EXPOSE 3000
 
